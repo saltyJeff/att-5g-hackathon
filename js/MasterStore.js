@@ -4,7 +4,16 @@ import Pouch from 'pouchdb'
 const context = new AudioContext()
 const merger = context.createChannelMerger()
 const audioRecorder = new WebAudioRecorder(merger, {})
-const pouch = new Pouch('pouchity pouch pouch')
+let options = {
+	live: true,
+	retry: true,
+	continuous: true,
+	auth: {
+		username: 'wathentedightoessinglowe',
+		password: 'a44aade3e16923dc1f59ca0207b70b4570dca0c0'
+	}
+};
+const pouch = new Pouch('https://2aeca32c-420b-42c5-96ef-8032e3b74711-bluemix.cloudant.com/karaoke', options)
 //const dest = context.createMediaStreamDestination()
 //merger.connect(dest)
 merger.connect(context.destination)
@@ -15,7 +24,7 @@ audioRecorder.onComplete = function(recorder, blob) {
 		.then(console.log)
 }
 
-class AppStore {
+export class AppStore {
 	numPeers = 0
 	couchData = {
 		leftUser: {
@@ -44,6 +53,8 @@ class AppStore {
 				return
 			}
 
+			console.log('connection')
+
 			// wait for a call
 			this.peer.on('call', (mediaConn) => {
 				mediaConn.answer()
@@ -71,15 +82,20 @@ class AppStore {
 		})
 		pouch.get('game').then((doc) => {
 			this.couchData = doc
+			this.onPouchUpdate(doc)
 		})
-		pouch.changes().on('change', () => {
-			pouch.get('game').then((doc) => {
-				this.couchData = doc
-				this.onPouchUpdate()
+
+		setInterval(() => {
+			pouch.changes({
+				since: 'now'
+			}).on('change', (chg) => {
+				console.log('changed', chg)
+				pouch.get('game').then((doc) => {
+					this.couchData = doc
+					this.onPouchUpdate(doc)
+				})
 			})
-		})
+		}, 1000)
 		merger.connect(context.destination)
 	}
 }
-export const store = new AppStore()
-window.store = store

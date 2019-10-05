@@ -13081,7 +13081,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.store = void 0;
+exports.AppStore = void 0;
 
 var _peerjs = _interopRequireDefault(require("peerjs"));
 
@@ -13094,7 +13094,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var context = new AudioContext();
 var merger = context.createChannelMerger();
 var audioRecorder = new WebAudioRecorder(merger, {});
-var pouch = new _pouchdb.default('pouchity pouch pouch'); //const dest = context.createMediaStreamDestination()
+var options = {
+  live: true,
+  retry: true,
+  continuous: true,
+  auth: {
+    username: 'wathentedightoessinglowe',
+    password: 'a44aade3e16923dc1f59ca0207b70b4570dca0c0'
+  }
+};
+var pouch = new _pouchdb.default('https://2aeca32c-420b-42c5-96ef-8032e3b74711-bluemix.cloudant.com/karaoke', options); //const dest = context.createMediaStreamDestination()
 //merger.connect(dest)
 
 merger.connect(context.destination);
@@ -13139,8 +13148,9 @@ var AppStore = function AppStore(onPouchUpdate) {
     if (_this.numPeers > 2) {
       alert('too many peers connected :(');
       return;
-    } // wait for a call
+    }
 
+    console.log('connection'); // wait for a call
 
     _this.peer.on('call', function (mediaConn) {
       mediaConn.answer();
@@ -13169,24 +13179,38 @@ var AppStore = function AppStore(onPouchUpdate) {
   });
   pouch.get('game').then(function (doc) {
     _this.couchData = doc;
-  });
-  pouch.changes().on('change', function () {
-    pouch.get('game').then(function (doc) {
-      _this.couchData = doc;
 
-      _this.onPouchUpdate();
-    });
+    _this.onPouchUpdate(doc);
   });
+  setInterval(function () {
+    pouch.changes({
+      since: 'now'
+    }).on('change', function (chg) {
+      console.log('changed', chg);
+      pouch.get('game').then(function (doc) {
+        _this.couchData = doc;
+
+        _this.onPouchUpdate(doc);
+      });
+    });
+  }, 1000);
   merger.connect(context.destination);
 };
 
-var store = new AppStore();
-exports.store = store;
-window.store = store;
+exports.AppStore = AppStore;
 },{"peerjs":"node_modules/peerjs/dist/peerjs.min.js","pouchdb":"node_modules/pouchdb/lib/index-browser.es.js"}],"js/masterIndex.js":[function(require,module,exports) {
 "use strict";
 
 var _MasterStore = require("./MasterStore");
+
+var karaokeVid = document.querySelector('#karaokeVid');
+var store = new _MasterStore.AppStore(function (doc) {
+  document.querySelector('#pouchdump').textContent = JSON.stringify(doc, null, 2);
+
+  if (karaokeVid.src != doc.karaokeUrl && doc.karaokeUrl != '?') {
+    karaokeVid.src = doc.karaokeUrl;
+  }
+});
 },{"./MasterStore":"js/MasterStore.js"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -13215,7 +13239,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55081" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61860" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
