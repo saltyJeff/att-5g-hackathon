@@ -11,7 +11,8 @@ function getStream(name: string): string {
 	// const idRes = await idReq.json()
 	// const id: number = idRes.id
 
-	return `https://mixer.com/embed/player/${name}`
+	//return `https://mixer.com/embed/player/${name}`
+	return 'youtube crap'
 }
 document.getElementById('startGameButton').onclick = () => {
 	const output: CouchData = {

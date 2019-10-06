@@ -1,3 +1,11 @@
+body {
+	background-color: black;
+	color: white;
+	font-family: sans-serif;
+}
+iframe {
+	border: 0px;
+}
 #ratingsWrapper {
 	flex: 1;
 	display: flex;

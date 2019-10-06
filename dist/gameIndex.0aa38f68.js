@@ -13466,7 +13466,8 @@ function getStream(name) {
   // const idReq = await fetch(`https://mixer.com/api/v1/channels/${name}?fields=id`)
   // const idRes = await idReq.json()
   // const id: number = idRes.id
-  return "https://mixer.com/embed/player/" + name;
+  //return `https://mixer.com/embed/player/${name}`
+  return 'youtube crap';
 }
 
 document.getElementById('startGameButton').onclick = function () {
