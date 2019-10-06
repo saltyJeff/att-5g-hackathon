@@ -13447,7 +13447,7 @@ function () {
 }();
 
 exports.AppStore = AppStore;
-},{"pouchdb":"node_modules/pouchdb/lib/index-browser.es.js","pouchdb-upsert":"node_modules/pouchdb-upsert/index.js"}],"js/viewerIndex.ts":[function(require,module,exports) {
+},{"pouchdb":"node_modules/pouchdb/lib/index-browser.es.js","pouchdb-upsert":"node_modules/pouchdb-upsert/index.js"}],"js/gameIndex.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13456,97 +13456,40 @@ Object.defineProperty(exports, "__esModule", {
 
 var MasterStore_1 = require("./MasterStore");
 
-var leftStreamerVid = document.querySelector('#leftStreamerVideo');
-var rightStreamerVid = document.querySelector('#rightStreamerVideo');
-var btnSwtich1 = document.querySelector('.switch-contestant1');
-var btnSwtich2 = document.querySelector('.switch-contestant2');
-var contestant1 = document.querySelector('.contestant1');
-var contestant2 = document.querySelector('.contestant2');
-var voteLeft = document.querySelector('#voteLeft');
-var voteRight = document.querySelector('#voteRight');
-var notVoted = true;
+var store = new MasterStore_1.AppStore(function () {});
 
-function tagRename(tag, val) {
-  document.querySelectorAll(tag).forEach(function (v) {
-    v.textContent = val;
-  });
+function idVal(id) {
+  return document.getElementById(id).value;
 }
 
-var lastData = undefined;
-
-function meaningfulChange(data) {
-  if (lastData == undefined) {
-    lastData = data;
-    return true;
-  }
-
-  return data.startTime != lastData.startTime;
-  var changed = lastData.karaokeUrl != data.karaokeUrl || lastData.leftUser.streamUrl != data.leftUser.streamUrl || lastData.rightUser.streamUrl != data.rightUser.streamUrl;
-  lastData = data;
-  return changed;
+function getStream(name) {
+  return "https://player.twitch.tv/?channel=" + name;
 }
 
-var store = new MasterStore_1.AppStore(function (data) {
-  if (meaningfulChange(data)) {
-    leftStreamerVid.src = data.leftUser.streamUrl;
-    rightStreamerVid.src = data.rightUser.streamUrl;
-    enableLinks();
-  }
-
-  tagRename('.unameLeft', data.leftUser.name);
-  tagRename('.unameRight', data.rightUser.name);
-  tagRename('#leftVotes', data.leftUser.ratingAudience + ' votes');
-  tagRename('#rightVotes', data.rightUser.ratingAudience + ' votes');
-});
-
-voteLeft.onclick = function () {
-  if (!notVoted) {
-    return false;
-  }
-
-  store.pouch.upsert('game', function (doc) {
-    var data = doc;
-    data.leftUser.ratingAudience++;
-    return data;
+document.getElementById('startGameButton').onclick = function () {
+  var output = {
+    _id: 'game',
+    leftUser: {
+      name: idVal('leftName'),
+      streamUrl: getStream(idVal('leftName')),
+      ratingAudience: 0,
+      ratingWatson: 0
+    },
+    rightUser: {
+      name: idVal('rightName'),
+      streamUrl: getStream(idVal('rightName')),
+      ratingAudience: 0,
+      ratingWatson: 0
+    },
+    songName: idVal('songName'),
+    karaokeUrl: idVal('karaokeUrl'),
+    startTime: Date.now() + 5 * 1000
+  };
+  store.pouch.get('game').then(function (g) {
+    output._rev = g._rev;
+    store.pouch.put(output);
   });
-  disableLinks();
 };
-
-voteRight.onclick = function () {
-  if (!notVoted) {
-    return false;
-  }
-
-  store.pouch.upsert('game', function (doc) {
-    var data = doc;
-    data.rightUser.ratingAudience++;
-    return data;
-  });
-  disableLinks();
-};
-
-btnSwtich1.addEventListener("click", function () {
-  contestant1.style.display = 'none';
-  contestant2.style.display = 'block';
-});
-btnSwtich2.addEventListener("click", function () {
-  contestant2.style.display = 'none';
-  contestant1.style.display = 'block';
-});
-
-function disableLinks() {
-  console.log('disabled voting');
-  voteLeft.classList.add('disabled');
-  voteRight.classList.add('disabled');
-  notVoted = false;
-}
-
-function enableLinks() {
-  console.log('enabled voting');
-  voteLeft.classList.remove('disabled');
-  voteRight.classList.remove('disabled');
-  notVoted = true;
-}
 },{"./MasterStore":"js/MasterStore.ts"}],"../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -13575,7 +13518,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64762" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54632" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -13750,5 +13693,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/viewerIndex.ts"], null)
-//# sourceMappingURL=/viewerIndex.3c1549a8.js.map
+},{}]},{},["../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/gameIndex.ts"], null)
+//# sourceMappingURL=/gameIndex.0aa38f68.js.map

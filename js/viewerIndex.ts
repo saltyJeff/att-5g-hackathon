@@ -49,7 +49,7 @@ const store = new AppStore((data) => {
 voteLeft.onclick = () => {
 	if(!notVoted) {
 		return false
-	}
+  }
 	store.pouch.upsert('game', (doc) => {
 		const data = doc as unknown as CouchData
 		data.leftUser.ratingAudience++
