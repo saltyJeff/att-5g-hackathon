@@ -8,19 +8,54 @@ body {
   margin: 0px;
   text-align: center
 }
-header {
-  background-image: linear-gradient(red, yellow);
+
+.logo {
+  margin-left: 10px;
+  margin-top: 8px;
+  width: 133px;
 }
-header div:nth-child(1) {
+
+header {
+  background-image: linear-gradient(to right, purple, #1e9ed7);
+}
+
+.header-div1 {
   padding-top: 8px;
   height: 33px;
 }
 
+.div-song {
+  display: flex;
+  padding-left: 10px;
+  padding-top: 16px;
+}
 
-header div:nth-child(2) {
+.div-moneybag {
+  margin-left: 47px;
+}
+
+.money-bag {
+  width: 47px;
+}
+
+.song-info {
   height: 55px;
   padding-top: 16px;
-  padding-left: 33px;
+  padding-left: 12px;
+  display: flex;
+}
+
+p i {
+  font-size: 1.3em;
+  margin-right: 8px;
+}
+
+.vid-content1 .vid-content2 {
+  pointer-events: none;
+}
+
+.vid-content-icon img {
+  padding: 8px;
 }
 
 header p {
@@ -124,6 +159,9 @@ main {
   border-radius: 3px;
   background: red;
   color: white;
+  position: relative;
+  left: 18em;
+  width: 138px;
 }
 
 iframe {
@@ -167,9 +205,7 @@ footer i {
 #voteRight {
   background: #47B560;
 }
-.disabled {
-  background-color: grey !important;
-}
+
 button {
  border: 0px;
 }

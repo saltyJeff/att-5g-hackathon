@@ -13447,7 +13447,7 @@ function () {
 }();
 
 exports.AppStore = AppStore;
-},{"pouchdb":"node_modules/pouchdb/lib/index-browser.es.js","pouchdb-upsert":"node_modules/pouchdb-upsert/index.js"}],"js/viewerIndex.ts":[function(require,module,exports) {
+},{"pouchdb":"node_modules/pouchdb/lib/index-browser.es.js","pouchdb-upsert":"node_modules/pouchdb-upsert/index.js"}],"js/masterIndex.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13456,97 +13456,43 @@ Object.defineProperty(exports, "__esModule", {
 
 var MasterStore_1 = require("./MasterStore");
 
-var leftStreamerVid = document.querySelector('#leftStreamerVideo');
-var rightStreamerVid = document.querySelector('#rightStreamerVideo');
-var btnSwtich1 = document.querySelector('.switch-contestant1');
-var btnSwtich2 = document.querySelector('.switch-contestant2');
-var contestant1 = document.querySelector('.contestant1');
-var contestant2 = document.querySelector('.contestant2');
-var voteLeft = document.querySelector('#voteLeft');
-var voteRight = document.querySelector('#voteRight');
-var notVoted = true;
+var karaokeVid = document.querySelector('#karaokeVid');
+var countdown = document.querySelector('#countDown');
 
-function tagRename(tag, val) {
-  document.querySelectorAll(tag).forEach(function (v) {
-    v.textContent = val;
-  });
+function txt(elemId, elemVal) {
+  document.getElementById(elemId).textContent = elemVal;
 }
 
-var lastData = undefined;
+var store = new MasterStore_1.AppStore(function (doc) {
+  // document.querySelector('#pouchdump').textContent = 
+  // 	JSON.stringify(doc, null, 2)
+  var delta = store.couchData.startTime - Date.now();
 
-function meaningfulChange(data) {
-  if (lastData == undefined) {
-    lastData = data;
-    return true;
+  if (delta > 0) {
+    karaokeVid.src = "";
   }
 
-  return data.startTime != lastData.startTime;
-  var changed = lastData.karaokeUrl != data.karaokeUrl || lastData.leftUser.streamUrl != data.leftUser.streamUrl || lastData.rightUser.streamUrl != data.rightUser.streamUrl;
-  lastData = data;
-  return changed;
-}
-
-var store = new MasterStore_1.AppStore(function (data) {
-  if (meaningfulChange(data)) {
-    leftStreamerVid.src = data.leftUser.streamUrl;
-    rightStreamerVid.src = data.rightUser.streamUrl;
-    enableLinks();
-  }
-
-  tagRename('.unameLeft', data.leftUser.name);
-  tagRename('.unameRight', data.rightUser.name);
-  tagRename('#leftVotes', data.leftUser.ratingAudience + ' votes');
-  tagRename('#rightVotes', data.rightUser.ratingAudience + ' votes');
+  txt('leftUserName', store.couchData.leftUser.name);
+  txt('leftUserUserRating', store.couchData.leftUser.ratingAudience + '');
+  txt('leftUserWatsonRating', store.couchData.leftUser.ratingWatson + '');
+  txt('rightUserName', store.couchData.rightUser.name);
+  txt('rightUserUserRating', store.couchData.rightUser.ratingAudience + '');
+  txt('rightUserWatsonRating', store.couchData.rightUser.ratingWatson + '');
 });
+var interval = setInterval(function () {
+  var delta = store.couchData.startTime - Date.now();
 
-voteLeft.onclick = function () {
-  if (!notVoted) {
-    return false;
+  if (delta < 0) {
+    if (store.couchData.karaokeUrl != karaokeVid.src) {
+      countdown.textContent = store.couchData.songName;
+      console.log('setting url: ', store.couchData.karaokeUrl);
+      karaokeVid.src = store.couchData.karaokeUrl;
+    }
+  } else {
+    countdown.textContent = 'Starting in: ' + delta / 1000 + ' s';
   }
-
-  store.pouch.upsert('game', function (doc) {
-    var data = doc;
-    data.leftUser.ratingAudience++;
-    return data;
-  });
-  disableLinks();
-};
-
-voteRight.onclick = function () {
-  if (!notVoted) {
-    return false;
-  }
-
-  store.pouch.upsert('game', function (doc) {
-    var data = doc;
-    data.rightUser.ratingAudience++;
-    return data;
-  });
-  disableLinks();
-};
-
-btnSwtich1.addEventListener("click", function () {
-  contestant1.style.display = 'none';
-  contestant2.style.display = 'block';
-});
-btnSwtich2.addEventListener("click", function () {
-  contestant2.style.display = 'none';
-  contestant1.style.display = 'block';
-});
-
-function disableLinks() {
-  console.log('disabled voting');
-  voteLeft.classList.add('disabled');
-  voteRight.classList.add('disabled');
-  notVoted = false;
-}
-
-function enableLinks() {
-  console.log('enabled voting');
-  voteLeft.classList.remove('disabled');
-  voteRight.classList.remove('disabled');
-  notVoted = true;
-}
+}, 100);
+window.store = store;
 },{"./MasterStore":"js/MasterStore.ts"}],"../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -13575,7 +13521,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64762" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54667" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -13750,5 +13696,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/viewerIndex.ts"], null)
-//# sourceMappingURL=/viewerIndex.3c1549a8.js.map
+},{}]},{},["../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/masterIndex.ts"], null)
+//# sourceMappingURL=/masterIndex.00822f47.js.map
