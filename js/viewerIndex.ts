@@ -24,7 +24,7 @@ function meaningfulChange(data: CouchData) {
 		lastData = data
 		return true
 	}
-	return data.startTime == lastData.startTime
+	return data.startTime != lastData.startTime
 	const changed = 
 		lastData.karaokeUrl != data.karaokeUrl ||
 		lastData.leftUser.streamUrl != data.leftUser.streamUrl ||
