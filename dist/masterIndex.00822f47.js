@@ -13483,14 +13483,12 @@ var interval = setInterval(function () {
   var delta = store.couchData.startTime - Date.now();
 
   if (delta < 0) {
-    countdown.style.display = "none";
-
     if (store.couchData.karaokeUrl != karaokeVid.src) {
+      countdown.textContent = store.couchData.songName;
       console.log('setting url: ', store.couchData.karaokeUrl);
       karaokeVid.src = store.couchData.karaokeUrl;
     }
   } else {
-    countdown.style.display = "block";
     countdown.textContent = 'Starting in: ' + delta / 1000 + ' s';
   }
 }, 100);

@@ -1,30 +1,33 @@
 import { AppStore, CouchData, User } from "./MasterStore";
 import PouchDB from 'pouchdb'
 
-const streamerVid: HTMLIFrameElement = document.querySelector('#streamerVideo')
-const switchButton: HTMLButtonElement = document.querySelector('#switchButton')
-const voteYes: HTMLButtonElement = document.querySelector('#voteYes')
-const voteNo: HTMLButtonElement = document.querySelector('#voteNo')
+const leftStreamerVid: HTMLIFrameElement = document.querySelector('#leftStreamerVideo')
+const rightStreamerVid: HTMLIFrameElement = document.querySelector('#rightStreamerVideo')
 
-let leftUserActive = true
-const resolveUser = () => leftUserActive ? 'leftUser' : 'rightUser'
-const store = new AppStore(() => {})
+const voteLeft: HTMLButtonElement = document.querySelector('#voteLeft')
+const voteRight: HTMLButtonElement = document.querySelector('#voteRight')
 
-switchButton.onclick = () => {
-	leftUserActive = !leftUserActive
-	streamerVid.src = store.couchData[resolveUser()].streamUrl
-}
-voteYes.onclick = () => {
+const store = new AppStore((data) => {
+	if(leftStreamerVid.src != data.leftUser.streamUrl) {
+		leftStreamerVid.src = data.leftUser.streamUrl
+	}
+	if(rightStreamerVid.src != data.rightUser.streamUrl) {
+		rightStreamerVid.src = data.rightUser.streamUrl
+	}
+})
+
+
+voteLeft.onclick = () => {
 	store.pouch.upsert('game', (doc) => {
 		const data = doc as unknown as CouchData
-		data[resolveUser()].ratingAudience++
+		data.leftUser.ratingAudience++
 		return data
 	})
 }
-voteNo.onclick = () => {
+voteRight.onclick = () => {
 	store.pouch.upsert('game', (doc) => {
 		const data = doc as unknown as CouchData
-		data[resolveUser()].ratingAudience--
+		data.rightUser.ratingAudience--
 		return data
 	})
 }

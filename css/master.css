@@ -1,0 +1,8 @@
+#ratingsWrapper {
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+}
+.userWrapper {
+	flex: 1;
+}

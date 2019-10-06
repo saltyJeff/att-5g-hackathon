@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html>
+	<head>
+			<link rel="stylesheet" href="./css/common.css">
+		<link rel="stylesheet" href="./css/master.css">
+	</head>
 	<body>
 		<h1 id="countDown"></h1>
 		<iframe id="karaokeVid" allowfullscreen style="width: 750px; height: 400px;"></iframe>
-		<h1 id="leftUserName"></h1>
-		<h2>User rating <span id="leftUserUserRating"></span></h2>
-		<h2>Watson rating <span id="leftUserWatsonRating"></span></h2>
-
-		<h1 id="rightUserName"></h1>
-		<h2>User rating <span id="rightUserUserRating"></span></h2>
-		<h2>Watson rating <span id="rightUserWatsonRating"></span></h2>
+		
+		<div id="ratingsWrapper">
+			<div id="leftWrapper" class="userWrapper">
+				<h1 id="leftUserName"></h1>
+				<h2>User rating <span id="leftUserUserRating"></span></h2>
+				<h2>Watson rating <span id="leftUserWatsonRating"></span></h2>
+			</div>
+			<div id="rightWrapper" class="userWrapper">
+				<h1 id="rightUserName"></h1>
+				<h2>User rating <span id="rightUserUserRating"></span></h2>
+				<h2>Watson rating <span id="rightUserWatsonRating"></span></h2>
+			</div>
+		</div>
 		<script src="js/masterIndex.ts"></script>
 	</body>
 </html>

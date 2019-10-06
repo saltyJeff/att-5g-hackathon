@@ -13456,35 +13456,32 @@ Object.defineProperty(exports, "__esModule", {
 
 var MasterStore_1 = require("./MasterStore");
 
-var streamerVid = document.querySelector('#streamerVideo');
-var switchButton = document.querySelector('#switchButton');
-var voteYes = document.querySelector('#voteYes');
-var voteNo = document.querySelector('#voteNo');
-var leftUserActive = true;
+var leftStreamerVid = document.querySelector('#leftStreamerVideo');
+var rightStreamerVid = document.querySelector('#rightStreamerVideo');
+var voteLeft = document.querySelector('#voteLeft');
+var voteRight = document.querySelector('#voteRight');
+var store = new MasterStore_1.AppStore(function (data) {
+  if (leftStreamerVid.src != data.leftUser.streamUrl) {
+    leftStreamerVid.src = data.leftUser.streamUrl;
+  }
 
-var resolveUser = function resolveUser() {
-  return leftUserActive ? 'leftUser' : 'rightUser';
-};
+  if (rightStreamerVid.src != data.rightUser.streamUrl) {
+    rightStreamerVid.src = data.rightUser.streamUrl;
+  }
+});
 
-var store = new MasterStore_1.AppStore(function () {});
-
-switchButton.onclick = function () {
-  leftUserActive = !leftUserActive;
-  streamerVid.src = store.couchData[resolveUser()].streamUrl;
-};
-
-voteYes.onclick = function () {
+voteLeft.onclick = function () {
   store.pouch.upsert('game', function (doc) {
     var data = doc;
-    data[resolveUser()].ratingAudience++;
+    data.leftUser.ratingAudience++;
     return data;
   });
 };
 
-voteNo.onclick = function () {
+voteRight.onclick = function () {
   store.pouch.upsert('game', function (doc) {
     var data = doc;
-    data[resolveUser()].ratingAudience--;
+    data.rightUser.ratingAudience--;
     return data;
   });
 };

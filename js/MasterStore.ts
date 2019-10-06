@@ -47,7 +47,7 @@ export class AppStore {
 		startTime: Date.now() + 1500
 	}
 	onPouchUpdate = (couch: CouchData) => {}
-	constructor (onPouchUpdate) {
+	constructor (onPouchUpdate: (couch: CouchData) => void) {
 		this.onPouchUpdate = onPouchUpdate
 		
 		this.pouch.get('game').then((doc) => {
