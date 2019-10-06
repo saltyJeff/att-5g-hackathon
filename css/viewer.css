@@ -50,10 +50,6 @@ p i {
   margin-right: 8px;
 }
 
-.vid-content1 .vid-content2 {
-  pointer-events: none;
-}
-
 .vid-content-icon img {
   padding: 8px;
 }
@@ -128,20 +124,22 @@ main {
 
 .contestant1 {
   position: absolute;
-  display: block;
   height: inherit;
+  display: flex;
+  background-color: black;
 }
 
 .contestant2 {
   position: absolute;
   display: none;
   height: inherit;
+  background-color: black;
 }
 
 .contestant1 iframe, .contestant2 iframe  {
   position: absolute;
   height: 445px;
-  height: 100%;
+  align-self: center;
 }
 
 .vid-content1, .vid-content2 {
@@ -151,17 +149,22 @@ main {
   height: 100%;
   align-content: space-between;
   flex-wrap: wrap;
+  pointer-events: none;
+}
+.vid-content-info {
+  pointer-events: all;
 }
 
-.switch-contestant1, .switch-contestant2 {
-  margin: 5px 0px;
+#switchButton {
   height: 35px;
   border-radius: 3px;
   background: red;
   color: white;
-  position: relative;
-  left: 18em;
   width: 138px;
+  pointer-events: auto;
+  z-index: 100;
+  touch-action: auto;
+  margin-left: 40px;
 }
 
 iframe {
@@ -208,4 +211,7 @@ footer i {
 
 button {
  border: 0px;
+}
+.disabled {
+  background-color: grey !important;
 }

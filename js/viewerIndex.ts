@@ -3,8 +3,7 @@ import PouchDB from 'pouchdb'
 
 const leftStreamerVid: HTMLIFrameElement = document.querySelector('#leftStreamerVideo')
 const rightStreamerVid: HTMLIFrameElement = document.querySelector('#rightStreamerVideo')
-const btnSwtich1: HTMLElement = document.querySelector('.switch-contestant1');
-const btnSwtich2: HTMLElement = document.querySelector('.switch-contestant2');
+const switchButton: HTMLElement = document.querySelector('#switchButton');
 const contestant1: HTMLElement = document.querySelector('.contestant1');
 const contestant2: HTMLElement = document.querySelector('.contestant2');
 
@@ -43,6 +42,7 @@ const store = new AppStore((data) => {
 	tagRename('.unameRight', data.rightUser.name)
 	tagRename('#leftVotes', data.leftUser.ratingAudience+' votes')
 	tagRename('#rightVotes', data.rightUser.ratingAudience+' votes')
+	tagRename('#songTitle', data.songName)
 })
 
 
@@ -56,6 +56,7 @@ voteLeft.onclick = () => {
 		return data
 	})
 	disableLinks()
+	return false
 }
 voteRight.onclick = () => {
 	if(!notVoted) {
@@ -67,17 +68,25 @@ voteRight.onclick = () => {
 		return data
 	})
 	disableLinks()
+	return false
 }
 
-
-btnSwtich1.addEventListener("click", function() {
-	contestant1.style.display = 'none'
-	contestant2.style.display = 'block'
-})
-
-btnSwtich2.addEventListener("click", function() {
-	contestant2.style.display = 'none'
-	contestant1.style.display = 'block'
+let p2 = false
+switchButton.addEventListener("click", function() {
+	p2 = !p2
+	console.log('switching')
+	if(p2) {
+		contestant1.style.display = 'none'
+		contestant2.style.display = 'flex'
+		leftStreamerVid.src = ''
+		rightStreamerVid.src = store.couchData.rightUser.streamUrl
+	}
+	else {
+		contestant2.style.display = 'none'
+		contestant1.style.display = 'flex'
+		rightStreamerVid.src = ''
+		leftStreamerVid.src = store.couchData.leftUser.streamUrl
+	}
 })
 
 function disableLinks () {

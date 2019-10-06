@@ -1374,7 +1374,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],"../../../usr/local/lib/node_modules/parcel-bundler/node_modules/events/events.js":[function(require,module,exports) {
+},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/events/events.js":[function(require,module,exports) {
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1792,7 +1792,7 @@ function unwrapListeners(arr) {
 
   return ret;
 }
-},{}],"../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
+},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -13003,7 +13003,7 @@ PouchDB.plugin(IDBPouch).plugin(HttpPouch$1).plugin(mapreduce).plugin(replicatio
 
 var _default = PouchDB;
 exports.default = _default;
-},{"immediate":"node_modules/immediate/lib/browser.js","uuid":"node_modules/uuid/index.js","spark-md5":"node_modules/spark-md5/spark-md5.js","vuvuzela":"node_modules/vuvuzela/index.js","argsarray":"node_modules/argsarray/index.js","inherits":"node_modules/pouchdb/node_modules/inherits/inherits_browser.js","events":"../../../usr/local/lib/node_modules/parcel-bundler/node_modules/events/events.js","process":"../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/lie/lib/browser.js":[function(require,module,exports) {
+},{"immediate":"node_modules/immediate/lib/browser.js","uuid":"node_modules/uuid/index.js","spark-md5":"node_modules/spark-md5/spark-md5.js","vuvuzela":"node_modules/vuvuzela/index.js","argsarray":"node_modules/argsarray/index.js","inherits":"node_modules/pouchdb/node_modules/inherits/inherits_browser.js","events":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/events/events.js","process":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/lie/lib/browser.js":[function(require,module,exports) {
 'use strict';
 var immediate = require('immediate');
 
@@ -13458,8 +13458,7 @@ var MasterStore_1 = require("./MasterStore");
 
 var leftStreamerVid = document.querySelector('#leftStreamerVideo');
 var rightStreamerVid = document.querySelector('#rightStreamerVideo');
-var btnSwtich1 = document.querySelector('.switch-contestant1');
-var btnSwtich2 = document.querySelector('.switch-contestant2');
+var switchButton = document.querySelector('#switchButton');
 var contestant1 = document.querySelector('.contestant1');
 var contestant2 = document.querySelector('.contestant2');
 var voteLeft = document.querySelector('#voteLeft');
@@ -13497,6 +13496,7 @@ var store = new MasterStore_1.AppStore(function (data) {
   tagRename('.unameRight', data.rightUser.name);
   tagRename('#leftVotes', data.leftUser.ratingAudience + ' votes');
   tagRename('#rightVotes', data.rightUser.ratingAudience + ' votes');
+  tagRename('#songTitle', data.songName);
 });
 
 voteLeft.onclick = function () {
@@ -13510,6 +13510,7 @@ voteLeft.onclick = function () {
     return data;
   });
   disableLinks();
+  return false;
 };
 
 voteRight.onclick = function () {
@@ -13523,15 +13524,25 @@ voteRight.onclick = function () {
     return data;
   });
   disableLinks();
+  return false;
 };
 
-btnSwtich1.addEventListener("click", function () {
-  contestant1.style.display = 'none';
-  contestant2.style.display = 'block';
-});
-btnSwtich2.addEventListener("click", function () {
-  contestant2.style.display = 'none';
-  contestant1.style.display = 'block';
+var p2 = false;
+switchButton.addEventListener("click", function () {
+  p2 = !p2;
+  console.log('switching');
+
+  if (p2) {
+    contestant1.style.display = 'none';
+    contestant2.style.display = 'flex';
+    leftStreamerVid.src = '';
+    rightStreamerVid.src = store.couchData.rightUser.streamUrl;
+  } else {
+    contestant2.style.display = 'none';
+    contestant1.style.display = 'flex';
+    rightStreamerVid.src = '';
+    leftStreamerVid.src = store.couchData.leftUser.streamUrl;
+  }
 });
 
 function disableLinks() {
@@ -13547,7 +13558,7 @@ function enableLinks() {
   voteRight.classList.remove('disabled');
   notVoted = true;
 }
-},{"./MasterStore":"js/MasterStore.ts"}],"../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./MasterStore":"js/MasterStore.ts"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -13575,7 +13586,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64762" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55867" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -13750,5 +13761,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/viewerIndex.ts"], null)
+},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/viewerIndex.ts"], null)
 //# sourceMappingURL=/viewerIndex.3c1549a8.js.map
