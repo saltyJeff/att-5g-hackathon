@@ -40,4 +40,4 @@ var e=arguments[3],t=require("process");Object.defineProperty(exports,"__esModul
 },{"pouchdb":"8iXQ","pouchdb-upsert":"Yv2s"}],"9fRQ":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("./MasterStore"),t=new e.AppStore(function(){});function r(e){return document.getElementById(e).value}function n(e){return"https://player.twitch.tv/?channel="+e}document.getElementById("startGameButton").onclick=function(){var e={_id:"game",leftUser:{name:r("leftName"),streamUrl:n(r("leftName")),ratingAudience:0,ratingWatson:0},rightUser:{name:r("rightName"),streamUrl:n(r("rightName")),ratingAudience:0,ratingWatson:0},songName:r("songName"),karaokeUrl:r("karaokeUrl"),startTime:Date.now()+5e3};t.pouch.get("game").then(function(r){e._rev=r._rev,t.pouch.put(e)})};
 },{"./MasterStore":"5CEW"}]},{},["9fRQ"], null)
-//# sourceMappingURL=/gameIndex.fba2de67.js.map
+//# sourceMappingURL=https://saltyjeff.github.io/att-5g-hackathon/gameIndex.fba2de67.js.map
