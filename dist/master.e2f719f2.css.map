@@ -1,1 +1,1 @@
-{"version":3,"sources":["css/master.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"master.e2f719f2.css","sourceRoot":"..","sourcesContent":["#ratingsWrapper {\r\n\tflex: 1;\r\n\tdisplay: flex;\r\n\tflex-direction: row;\r\n}\r\n.userWrapper {\r\n\tflex: 1;\r\n}"]}
+{"version":3,"sources":["css/master.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"master.e2f719f2.css","sourceRoot":"..","sourcesContent":["#ratingsWrapper {\n\tflex: 1;\n\tdisplay: flex;\n\tflex-direction: row;\n}\n.userWrapper {\n\tflex: 1;\n}"]}

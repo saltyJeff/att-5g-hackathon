@@ -1374,7 +1374,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/events/events.js":[function(require,module,exports) {
+},{}],"../../../usr/local/lib/node_modules/parcel-bundler/node_modules/events/events.js":[function(require,module,exports) {
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1792,7 +1792,7 @@ function unwrapListeners(arr) {
 
   return ret;
 }
-},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
+},{}],"../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -13003,7 +13003,7 @@ PouchDB.plugin(IDBPouch).plugin(HttpPouch$1).plugin(mapreduce).plugin(replicatio
 
 var _default = PouchDB;
 exports.default = _default;
-},{"immediate":"node_modules/immediate/lib/browser.js","uuid":"node_modules/uuid/index.js","spark-md5":"node_modules/spark-md5/spark-md5.js","vuvuzela":"node_modules/vuvuzela/index.js","argsarray":"node_modules/argsarray/index.js","inherits":"node_modules/pouchdb/node_modules/inherits/inherits_browser.js","events":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/events/events.js","process":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/lie/lib/browser.js":[function(require,module,exports) {
+},{"immediate":"node_modules/immediate/lib/browser.js","uuid":"node_modules/uuid/index.js","spark-md5":"node_modules/spark-md5/spark-md5.js","vuvuzela":"node_modules/vuvuzela/index.js","argsarray":"node_modules/argsarray/index.js","inherits":"node_modules/pouchdb/node_modules/inherits/inherits_browser.js","events":"../../../usr/local/lib/node_modules/parcel-bundler/node_modules/events/events.js","process":"../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/lie/lib/browser.js":[function(require,module,exports) {
 'use strict';
 var immediate = require('immediate');
 
@@ -13493,7 +13493,7 @@ document.getElementById('startGameButton').onclick = function () {
     store.pouch.put(output);
   });
 };
-},{"./MasterStore":"js/MasterStore.ts"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./MasterStore":"js/MasterStore.ts"}],"../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -13521,7 +13521,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64845" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50898" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -13696,5 +13696,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/gameIndex.ts"], null)
+},{}]},{},["../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/gameIndex.ts"], null)
 //# sourceMappingURL=/gameIndex.0aa38f68.js.map
