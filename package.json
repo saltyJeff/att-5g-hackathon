@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "hls.js": "^0.12.4",
     "parcel-plugin-html-root-syntax": "^0.0.3",
     "peerjs": "^1.1.0",
     "pouchdb": "^7.1.1"
@@ -11,6 +12,9 @@
     "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.6.0",
-    "babel-plugin-import": "^1.12.2"
+    "@types/hls.js": "^0.12.5",
+    "@types/pouchdb": "^6.4.0",
+    "babel-plugin-import": "^1.12.2",
+    "typescript": "^3.6.3"
   }
 }
