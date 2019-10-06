@@ -13499,7 +13499,10 @@ var store = new MasterStore_1.AppStore(function (data) {
   tagRename('#songTitle', data.songName);
 });
 
-voteLeft.onclick = function () {
+voteLeft.onclick = function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+
   if (!notVoted) {
     return false;
   }
@@ -13513,7 +13516,10 @@ voteLeft.onclick = function () {
   return false;
 };
 
-voteRight.onclick = function () {
+voteRight.onclick = function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+
   if (!notVoted) {
     return false;
   }
@@ -13586,7 +13592,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55867" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63126" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

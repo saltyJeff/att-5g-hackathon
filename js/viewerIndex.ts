@@ -46,7 +46,9 @@ const store = new AppStore((data) => {
 })
 
 
-voteLeft.onclick = () => {
+voteLeft.onclick = (e) => {
+	e.preventDefault()
+	e.stopPropagation()
 	if(!notVoted) {
 		return false
   }
@@ -58,7 +60,9 @@ voteLeft.onclick = () => {
 	disableLinks()
 	return false
 }
-voteRight.onclick = () => {
+voteRight.onclick = (e) => {
+	e.preventDefault()
+	e.stopPropagation()
 	if(!notVoted) {
 		return false
 	}
