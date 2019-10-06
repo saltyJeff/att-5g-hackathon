@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-{"version":3,"sources":["css/master.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"master.e2f719f2.css","sourceRoot":"..","sourcesContent":["body {\r\n\tbackground-color: black;\r\n\tcolor: white;\r\n\tfont-family: sans-serif;\r\n}\r\niframe {\r\n\tborder: 0px;\r\n}\r\n#ratingsWrapper {\r\n\tflex: 1;\r\n\tdisplay: flex;\r\n\tflex-direction: row;\r\n}\r\n.userWrapper {\r\n\tflex: 1;\r\n}"]}
-=======
-{"version":3,"sources":["css/master.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"master.e2f719f2.css","sourceRoot":"..","sourcesContent":["#ratingsWrapper {\n\tflex: 1;\n\tdisplay: flex;\n\tflex-direction: row;\n}\n.userWrapper {\n\tflex: 1;\n}"]}
->>>>>>> b4342e8d2c1ab8eacda53b1c1e2c454b5c8da7e2
