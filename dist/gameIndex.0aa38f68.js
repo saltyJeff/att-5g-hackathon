@@ -13447,7 +13447,7 @@ function () {
 }();
 
 exports.AppStore = AppStore;
-},{"pouchdb":"node_modules/pouchdb/lib/index-browser.es.js","pouchdb-upsert":"node_modules/pouchdb-upsert/index.js"}],"js/masterIndex.ts":[function(require,module,exports) {
+},{"pouchdb":"node_modules/pouchdb/lib/index-browser.es.js","pouchdb-upsert":"node_modules/pouchdb-upsert/index.js"}],"js/gameIndex.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13456,45 +13456,43 @@ Object.defineProperty(exports, "__esModule", {
 
 var MasterStore_1 = require("./MasterStore");
 
-var karaokeVid = document.querySelector('#karaokeVid');
-var countdown = document.querySelector('#countDown');
+var store = new MasterStore_1.AppStore(function () {});
 
-function txt(elemId, elemVal) {
-  document.getElementById(elemId).textContent = elemVal;
+function idVal(id) {
+  return document.getElementById(id).value;
 }
 
-var store = new MasterStore_1.AppStore(function (doc) {
-  // document.querySelector('#pouchdump').textContent = 
-  // 	JSON.stringify(doc, null, 2)
-  var delta = store.couchData.startTime - Date.now();
+function getStream(name) {
+  // const idReq = await fetch(`https://mixer.com/api/v1/channels/${name}?fields=id`)
+  // const idRes = await idReq.json()
+  // const id: number = idRes.id
+  return "https://mixer.com/embed/player/" + name;
+}
 
-  if (delta > 0) {
-    karaokeVid.src = "";
-  }
-
-  txt('leftUserName', store.couchData.leftUser.name);
-  txt('leftUserUserRating', store.couchData.leftUser.ratingAudience + '');
-  txt('leftUserWatsonRating', store.couchData.leftUser.ratingWatson + '');
-  txt('rightUserName', store.couchData.rightUser.name);
-  txt('rightUserUserRating', store.couchData.rightUser.ratingAudience + '');
-  txt('rightUserWatsonRating', store.couchData.rightUser.ratingWatson + '');
-});
-var interval = setInterval(function () {
-  var delta = store.couchData.startTime - Date.now();
-
-  if (delta < 0) {
-    countdown.style.display = "none";
-
-    if (store.couchData.karaokeUrl != karaokeVid.src) {
-      console.log('setting url: ', store.couchData.karaokeUrl);
-      karaokeVid.src = store.couchData.karaokeUrl;
-    }
-  } else {
-    countdown.style.display = "block";
-    countdown.textContent = 'Starting in: ' + delta / 1000 + ' s';
-  }
-}, 100);
-window.store = store;
+document.getElementById('startGameButton').onclick = function () {
+  var output = {
+    _id: 'game',
+    leftUser: {
+      name: idVal('leftName'),
+      streamUrl: getStream(idVal('leftName')),
+      ratingAudience: 0,
+      ratingWatson: 0
+    },
+    rightUser: {
+      name: idVal('rightName'),
+      streamUrl: getStream(idVal('rightName')),
+      ratingAudience: 0,
+      ratingWatson: 0
+    },
+    songName: idVal('songName'),
+    karaokeUrl: idVal('karaokeUrl'),
+    startTime: Date.now() + 5 * 1000
+  };
+  store.pouch.get('game').then(function (g) {
+    output._rev = g._rev;
+    store.pouch.put(output);
+  });
+};
 },{"./MasterStore":"js/MasterStore.ts"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -13523,7 +13521,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55611" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64845" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -13698,5 +13696,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/masterIndex.ts"], null)
-//# sourceMappingURL=/masterIndex.00822f47.js.map
+},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/gameIndex.ts"], null)
+//# sourceMappingURL=/gameIndex.0aa38f68.js.map

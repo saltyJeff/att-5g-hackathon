@@ -1,4 +1,5 @@
 import Pouch from 'pouchdb'
+Pouch.plugin(require('pouchdb-upsert'));
 
 let options = {
 	live: true,
@@ -22,6 +23,8 @@ export interface CouchData {
 	songName: string
 	karaokeUrl: string
 	startTime: number
+	_id?: string
+	_rev?: string
 }
 
 export class AppStore {

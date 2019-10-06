@@ -3,7 +3,8 @@
     "hls.js": "^0.12.4",
     "parcel-plugin-html-root-syntax": "^0.0.3",
     "peerjs": "^1.1.0",
-    "pouchdb": "^7.1.1"
+    "pouchdb": "^7.1.1",
+    "pouchdb-upsert": "^2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -14,6 +15,7 @@
     "@babel/preset-typescript": "^7.6.0",
     "@types/hls.js": "^0.12.5",
     "@types/pouchdb": "^6.4.0",
+    "@types/pouchdb-upsert": "^2.2.6",
     "babel-plugin-import": "^1.12.2",
     "typescript": "^3.6.3"
   }

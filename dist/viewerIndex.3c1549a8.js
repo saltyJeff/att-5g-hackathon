@@ -13447,7 +13447,7 @@ function () {
 }();
 
 exports.AppStore = AppStore;
-},{"pouchdb":"node_modules/pouchdb/lib/index-browser.es.js","pouchdb-upsert":"node_modules/pouchdb-upsert/index.js"}],"js/masterIndex.ts":[function(require,module,exports) {
+},{"pouchdb":"node_modules/pouchdb/lib/index-browser.es.js","pouchdb-upsert":"node_modules/pouchdb-upsert/index.js"}],"js/viewerIndex.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13456,45 +13456,38 @@ Object.defineProperty(exports, "__esModule", {
 
 var MasterStore_1 = require("./MasterStore");
 
-var karaokeVid = document.querySelector('#karaokeVid');
-var countdown = document.querySelector('#countDown');
+var streamerVid = document.querySelector('#streamerVideo');
+var switchButton = document.querySelector('#switchButton');
+var voteYes = document.querySelector('#voteYes');
+var voteNo = document.querySelector('#voteNo');
+var leftUserActive = true;
 
-function txt(elemId, elemVal) {
-  document.getElementById(elemId).textContent = elemVal;
-}
+var resolveUser = function resolveUser() {
+  return leftUserActive ? 'leftUser' : 'rightUser';
+};
 
-var store = new MasterStore_1.AppStore(function (doc) {
-  // document.querySelector('#pouchdump').textContent = 
-  // 	JSON.stringify(doc, null, 2)
-  var delta = store.couchData.startTime - Date.now();
+var store = new MasterStore_1.AppStore(function () {});
 
-  if (delta > 0) {
-    karaokeVid.src = "";
-  }
+switchButton.onclick = function () {
+  leftUserActive = !leftUserActive;
+  streamerVid.src = store.couchData[resolveUser()].streamUrl;
+};
 
-  txt('leftUserName', store.couchData.leftUser.name);
-  txt('leftUserUserRating', store.couchData.leftUser.ratingAudience + '');
-  txt('leftUserWatsonRating', store.couchData.leftUser.ratingWatson + '');
-  txt('rightUserName', store.couchData.rightUser.name);
-  txt('rightUserUserRating', store.couchData.rightUser.ratingAudience + '');
-  txt('rightUserWatsonRating', store.couchData.rightUser.ratingWatson + '');
-});
-var interval = setInterval(function () {
-  var delta = store.couchData.startTime - Date.now();
+voteYes.onclick = function () {
+  store.pouch.upsert('game', function (doc) {
+    var data = doc;
+    data[resolveUser()].ratingAudience++;
+    return data;
+  });
+};
 
-  if (delta < 0) {
-    countdown.style.display = "none";
-
-    if (store.couchData.karaokeUrl != karaokeVid.src) {
-      console.log('setting url: ', store.couchData.karaokeUrl);
-      karaokeVid.src = store.couchData.karaokeUrl;
-    }
-  } else {
-    countdown.style.display = "block";
-    countdown.textContent = 'Starting in: ' + delta / 1000 + ' s';
-  }
-}, 100);
-window.store = store;
+voteNo.onclick = function () {
+  store.pouch.upsert('game', function (doc) {
+    var data = doc;
+    data[resolveUser()].ratingAudience--;
+    return data;
+  });
+};
 },{"./MasterStore":"js/MasterStore.ts"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -13523,7 +13516,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55611" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58720" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -13698,5 +13691,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/masterIndex.ts"], null)
-//# sourceMappingURL=/masterIndex.00822f47.js.map
+},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/viewerIndex.ts"], null)
+//# sourceMappingURL=/viewerIndex.3c1549a8.js.map

@@ -15,16 +15,16 @@ switchButton.onclick = () => {
 	streamerVid.src = store.couchData[resolveUser()].streamUrl
 }
 voteYes.onclick = () => {
-	store.pouch.get('game').then((doc) => {
+	store.pouch.upsert('game', (doc) => {
 		const data = doc as unknown as CouchData
 		data[resolveUser()].ratingAudience++
-		store.pouch.put(doc)
+		return data
 	})
 }
 voteNo.onclick = () => {
-	store.pouch.get('game').then((doc) => {
+	store.pouch.upsert('game', (doc) => {
 		const data = doc as unknown as CouchData
 		data[resolveUser()].ratingAudience--
-		store.pouch.put(doc)
+		return data
 	})
 }
