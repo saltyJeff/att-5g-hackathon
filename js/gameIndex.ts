@@ -7,12 +7,7 @@ function idVal(id: string): string {
 	return (document.getElementById(id) as HTMLInputElement).value
 }
 function getStream(name: string): string {
-	// const idReq = await fetch(`https://mixer.com/api/v1/channels/${name}?fields=id`)
-	// const idRes = await idReq.json()
-	// const id: number = idRes.id
-
-	//return `https://mixer.com/embed/player/${name}`
-	return 'youtube crap'
+	return `https://player.twitch.tv/?channel=${name}`
 }
 document.getElementById('startGameButton').onclick = () => {
 	const output: CouchData = {

@@ -13458,33 +13458,93 @@ var MasterStore_1 = require("./MasterStore");
 
 var leftStreamerVid = document.querySelector('#leftStreamerVideo');
 var rightStreamerVid = document.querySelector('#rightStreamerVideo');
+var btnSwtich1 = document.querySelector('.switch-contestant1');
+var btnSwtich2 = document.querySelector('.switch-contestant2');
+var contestant1 = document.querySelector('.contestant1');
+var contestant2 = document.querySelector('.contestant2');
 var voteLeft = document.querySelector('#voteLeft');
 var voteRight = document.querySelector('#voteRight');
-var store = new MasterStore_1.AppStore(function (data) {
-  if (leftStreamerVid.src != data.leftUser.streamUrl) {
-    leftStreamerVid.src = data.leftUser.streamUrl;
+var notVoted = true;
+
+function tagRename(tag, val) {
+  document.querySelectorAll(tag).forEach(function (v) {
+    v.textContent = val;
+  });
+}
+
+var lastData = undefined;
+
+function meaningfulChange(data) {
+  if (lastData == undefined) {
+    lastData = data;
+    return true;
   }
 
-  if (rightStreamerVid.src != data.rightUser.streamUrl) {
+  return data.startTime == lastData.startTime;
+  var changed = lastData.karaokeUrl != data.karaokeUrl || lastData.leftUser.streamUrl != data.leftUser.streamUrl || lastData.rightUser.streamUrl != data.rightUser.streamUrl;
+  lastData = data;
+  return changed;
+}
+
+var store = new MasterStore_1.AppStore(function (data) {
+  if (meaningfulChange(data)) {
+    leftStreamerVid.src = data.leftUser.streamUrl;
     rightStreamerVid.src = data.rightUser.streamUrl;
+    enableLinks();
   }
+
+  tagRename('.unameLeft', data.leftUser.name);
+  tagRename('.unameRight', data.rightUser.name);
 });
 
 voteLeft.onclick = function () {
+  if (!notVoted) {
+    return false;
+  }
+
   store.pouch.upsert('game', function (doc) {
     var data = doc;
     data.leftUser.ratingAudience++;
     return data;
   });
+  disableLinks();
 };
 
 voteRight.onclick = function () {
+  if (!notVoted) {
+    return false;
+  }
+
   store.pouch.upsert('game', function (doc) {
     var data = doc;
     data.rightUser.ratingAudience--;
     return data;
   });
+  disableLinks();
 };
+
+btnSwtich1.addEventListener("click", function () {
+  contestant1.style.display = 'none';
+  contestant2.style.display = 'block';
+});
+btnSwtich2.addEventListener("click", function () {
+  contestant2.style.display = 'none';
+  contestant1.style.display = 'block';
+});
+
+function disableLinks() {
+  console.log('disabled voting');
+  voteLeft.classList.add('disabled');
+  voteRight.classList.add('disabled');
+  notVoted = false;
+}
+
+function enableLinks() {
+  console.log('enabled voting');
+  voteLeft.classList.remove('disabled');
+  voteRight.classList.remove('disabled');
+  notVoted = true;
+}
 },{"./MasterStore":"js/MasterStore.ts"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
