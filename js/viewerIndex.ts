@@ -41,6 +41,8 @@ const store = new AppStore((data) => {
 
 	tagRename('.unameLeft', data.leftUser.name)
 	tagRename('.unameRight', data.rightUser.name)
+	tagRename('#leftVotes', data.leftUser.ratingAudience+' votes')
+	tagRename('#rightVotes', data.rightUser.ratingAudience+' votes')
 })
 
 
