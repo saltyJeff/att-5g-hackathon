@@ -13517,7 +13517,7 @@ voteRight.onclick = function () {
 
   store.pouch.upsert('game', function (doc) {
     var data = doc;
-    data.rightUser.ratingAudience--;
+    data.rightUser.ratingAudience++;
     return data;
   });
   disableLinks();

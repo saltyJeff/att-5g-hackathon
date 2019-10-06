@@ -61,7 +61,7 @@ voteRight.onclick = () => {
 	}
 	store.pouch.upsert('game', (doc) => {
 		const data = doc as unknown as CouchData
-		data.rightUser.ratingAudience--
+		data.rightUser.ratingAudience++
 		return data
 	})
 	disableLinks()
