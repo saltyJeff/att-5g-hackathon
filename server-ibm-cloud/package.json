@@ -13,6 +13,6 @@
     "@cloudant/cloudant": "^4.2.1",
     "@mixer/client-node": "^3.5.0",
     "minimist": "^1.2.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   }
 }
